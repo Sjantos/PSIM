@@ -27,6 +27,12 @@ namespace StudBaza.Data.Context
                 Description = "Post description example",
                 CreatedAt = DateTime.Now,
                 AuthorId = 11, //fake userID
+                //Tags = new List<string>()
+                //{
+                //    "newton",
+                //    "physic",
+                //    "gravitation"
+                //},
                 Tags = new List<Tag>()
                 {
                     new Tag("newton"),

@@ -19,8 +19,10 @@ namespace StudBaza.Application
             //builder.RegisterAssemblyModules(typeof(ServiceModule).Assembly);
 
             builder.RegisterType<PostService>().As<IPostService>();
+            builder.RegisterType<UserService>().As<IUserService>();
 
             builder.RegisterType<PostRepository>().As<IPostRepository>();
+            builder.RegisterType<UserRepository>().As<IUserRepository>();
             //builder.RegisterType<TravisDataProvider>().As<ICiDataProvider>();
             //builder.RegisterType<CiDataProviderFactory>().As<ICiDataProviderFactory>();
         }

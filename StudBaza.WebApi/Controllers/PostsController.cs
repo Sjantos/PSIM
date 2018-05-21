@@ -65,7 +65,7 @@ namespace StudBaza.WebApi.Controllers
             return new JsonResult(createdResult);
         }
 
-        //DELETE api/Panel/5
+        //DELETE api/Post/5
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {
