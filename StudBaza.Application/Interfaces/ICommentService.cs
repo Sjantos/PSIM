@@ -8,6 +8,7 @@ namespace StudBaza.Application.Interfaces
 {
     public interface ICommentService
     {
+        Task<int> GetAuthorId(string username);
         Task<IEnumerable<Comment>> GetAllComments();
         Task<IEnumerable<Comment>> GetCommentsForPost(int postId);
         Task<Comment> GetCommentById(int id);

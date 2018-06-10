@@ -53,7 +53,7 @@ namespace StudBaza.WebApi.Controllers
         [SwaggerRequestExample(typeof(CreateComment), typeof(CreateCommentExample))]
         public async Task<IActionResult> Post([FromBody] CreateComment model)
         {
-            var entity = model.MapEntity(model);
+            var entity = model.MapEntity(model, await _commentService.GetAuthorId(model.AuthorUsername));
 
             var createdResult = await _commentService.CreateCommentAsync(entity);
             return new JsonResult(createdResult);
@@ -64,7 +64,7 @@ namespace StudBaza.WebApi.Controllers
         [ValidateModel]
         public async Task<IActionResult> Put(int id, [FromBody] UpdateComment model)
         {
-            var entity = model.MapEntity(model);
+            var entity = model.MapEntity(model, await _commentService.GetAuthorId(model.AuthorUsername));
             entity.Id = id;
 
             var createdResult = await _commentService.UpdateCommentAsync(entity);

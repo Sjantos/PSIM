@@ -25,7 +25,7 @@ namespace StudBaza.WebApi.Controllers
 
         //GET api/Post
         [HttpGet]
-        public async Task<IEnumerable<Post>> Get()
+        public async Task<IEnumerable<ResponsePost>> Get()
         {
             var allPosts = await _postService.GetAllPostsAsync();
             return allPosts;
@@ -47,7 +47,7 @@ namespace StudBaza.WebApi.Controllers
         [SwaggerRequestExample(typeof(CreatePost), typeof(CreatePostExample))]
         public async Task<IActionResult> Post([FromBody] CreatePost model)
         {
-            var entity = model.MapEntity(model);
+            var entity = model.MapEntity(model, await _postService.GetAuthorId(model.AuthorUsername));
 
             var createdResult = await _postService.CreatePostAsync(entity);
             return new JsonResult(createdResult);
@@ -58,7 +58,7 @@ namespace StudBaza.WebApi.Controllers
         [ValidateModel]
         public async Task<IActionResult> Put(int id, [FromBody] UpdatePost model)
         {
-            var entity = model.MapEntity(model);
+            var entity = model.MapEntity(model, await _postService.GetAuthorId(model.AuthorUsername));
             entity.Id = id;
 
             var createdResult = await _postService.UpdatePostAsync(entity);

@@ -14,9 +14,21 @@ namespace StudBaza.Data.Context
         {
             //ctx.AddRange(SeedProjects);
             ctx.AddRange(SeedPosts);
+            ctx.AddRange(SeedUsers);
 
             ctx.SaveChanges();
         }
+
+        private static List<User> _seedUsers;
+        private static List<User> SeedUsers => _seedUsers ?? (_seedUsers = new List<User>()
+        {
+            new User()
+            {
+                Email = "defaultUser@mail.com",
+                Username = "DefaultUsername",
+                Password = "wnrfjwqnfjwnqrfgnwjklergnklwegjklnjkwlegn"
+            }
+        });
 
         private static List<Post> _seedPosts;
         private static List<Post> SeedPosts => _seedPosts ?? (_seedPosts = new List<Post>()
@@ -26,13 +38,7 @@ namespace StudBaza.Data.Context
                 Title = "Post title example",
                 Description = "Post description example",
                 CreatedAt = DateTime.Now,
-                AuthorId = 11, //fake userID
-                //Tags = new List<string>()
-                //{
-                //    "newton",
-                //    "physic",
-                //    "gravitation"
-                //},
+                AuthorId = 1, //fake userID
                 Tags = new List<Tag>()
                 {
                     new Tag("newton"),
@@ -43,283 +49,12 @@ namespace StudBaza.Data.Context
                 {
                     new Comment()
                     {
-                        AuthorId = 11,
+                        AuthorId = 1,
                         CommentContent = "Comment body example",
                         CreatedAt = DateTime.Now,
                     }
                 }
             }
-            //new StaticBranchPanel()
-            //{
-            //    Title = "Fancy Title 2",
-            //    Position = new PanelPosition() {Column = 0, Row = 0, Width = 6, Height = 1},
-            //    Project = SeedProjects.ElementAt(0),
-            //    StaticBranchName = "master",
-            //},
-            //new DynamicPipelinesPanel() {
-            //    Title = "Fancy Title Dynamic",
-            //    Position = new PanelPosition() {Column = 0, Row = 1, Width = 6, Height = 2},
-            //    Project = SeedProjects.ElementAt(0),
-            //    HowManyLastPipelinesToRead = 2,
-            //    PanelRegex = ".*"
-            //},
-            //new StaticBranchPanel()
-            //{
-            //    Title = "Fancy Title Ember",
-            //    Position = new PanelPosition() {Column = 10, Row = 0, Width = 6, Height = 1},
-            //    Project = SeedProjects.ElementAt(1),
-            //    StaticBranchName = "master",
-            //},
-            //new DynamicPipelinesPanel() {
-            //    Title = "Fancy Title Dynamic Ember",
-            //    Position = new PanelPosition() {Column = 10, Row = 1, Width = 6, Height = 2},
-            //    Project = SeedProjects.ElementAt(1),
-            //    HowManyLastPipelinesToRead = 2,
-            //    PanelRegex = ".*"
-            //},
         });
-
-        //private static List<Project> _seedProjects;
-        //private static List<Project> SeedProjects => _seedProjects ?? (_seedProjects = new List<Project>()
-        //{
-        //    new Project()
-        //    {
-        //        ProjectTitle = "GitLab CE",
-        //        DataProviderName = "GitLab",
-        //        ApiHostUrl = "https://gitlab.com",
-        //        ApiProjectId = "13083",
-        //        ApiAuthenticationToken = "_3xydmKE2tpyWFVWgw7c",
-        //        CiDataUpdateCronExpression = "*/40 * * * *",
-        //        PipelinesNumber = 10,
-        //        Pipelines = new List<Pipeline>()
-        //        {
-        //            new Pipeline()
-        //            {
-        //                DataProviderPipelineId = 21584362, // fakeid
-        //                Ref = "master",
-        //                Sha = "927a9b13f083b7610d7ab31fa4204c1991668ddb",
-        //                CommitTitle = "Forth Commit Title",
-        //                CommiterName = "F Name",
-        //                CreatedAt = DateTime.UtcNow,
-        //                StartedAt = DateTime.UtcNow,
-        //                UpdatedAt = DateTime.UtcNow,
-        //                FinishedAt = null,
-        //                Status = Status.Running,
-        //                Stages = new List<Stage>()
-        //                {
-        //                    new Stage()
-        //                    {
-        //                        StageName = "Build",
-        //                        StageStatus = Status.Created
-        //                    },
-        //                    new Stage()
-        //                    {
-        //                        StageName = "Prepare",
-        //                        StageStatus = Status.Created
-        //                    },
-        //                    new Stage()
-        //                    {
-        //                        StageName = "Test",
-        //                        StageStatus = Status.Failed
-        //                    },
-        //                    new Stage()
-        //                    {
-        //                        StageName = "Post-test",
-        //                        StageStatus = Status.Created
-        //                    }
-        //                }
-        //            },
-        //            new Pipeline()
-        //            {
-        //                DataProviderPipelineId = 21584362, // fakeid
-        //                Ref = "someBrnach",
-        //                Sha = "927a9b13f083b7610d7ab31fa4204c1991668ddb",
-        //                CommitTitle = "Fifth Commit Title",
-        //                CommiterName = "Fe Name",
-        //                CreatedAt = DateTime.UtcNow,
-        //                StartedAt = DateTime.UtcNow,
-        //                UpdatedAt = DateTime.UtcNow,
-        //                FinishedAt = null,
-        //                Status = Status.Running,
-        //                Stages = new List<Stage>()
-        //                {
-        //                    new Stage()
-        //                    {
-        //                        StageName = "Build",
-        //                        StageStatus = Status.Created
-        //                    },
-        //                    new Stage()
-        //                    {
-        //                        StageName = "Prepare",
-        //                        StageStatus = Status.Created
-        //                    },
-        //                    new Stage()
-        //                    {
-        //                        StageName = "Test",
-        //                        StageStatus = Status.Failed
-        //                    },
-        //                    new Stage()
-        //                    {
-        //                        StageName = "Post-test",
-        //                        StageStatus = Status.Created
-        //                    }
-        //                }
-        //            },
-        //            new Pipeline()
-        //            {
-        //                DataProviderPipelineId = 21584362, // fakeid
-        //                Ref = "someanotherbranch",
-        //                Sha = "927a9b13f083b7610d7ab31fa4204c1991668ddb",
-        //                CommitTitle = "Wyje Commit Title",
-        //                CommiterName = "Bame",
-        //                CreatedAt = DateTime.UtcNow,
-        //                StartedAt = DateTime.UtcNow,
-        //                UpdatedAt = DateTime.UtcNow,
-        //                FinishedAt = null,
-        //                Status = Status.Running,
-        //                Stages = new List<Stage>()
-        //                {
-        //                    new Stage()
-        //                    {
-        //                        StageName = "Build",
-        //                        StageStatus = Status.Success
-        //                    },
-        //                    new Stage()
-        //                    {
-        //                        StageName = "Prepare",
-        //                        StageStatus = Status.Running
-        //                    },
-        //                    new Stage()
-        //                    {
-        //                        StageName = "Test",
-        //                        StageStatus = Status.Created
-        //                    },
-        //                    new Stage()
-        //                    {
-        //                        StageName = "Post-test",
-        //                        StageStatus = Status.Created
-        //                    }
-        //                }
-        //            },
-
-        //        }
-        //    },
-        //    new Project()
-        //    {
-        //        ProjectTitle = "Emberjs",
-        //        DataProviderName = "Travis",
-        //        ApiProjectId = "emberjs/ember.js",
-        //        ApiHostUrl = "https://api.travis-ci.org",
-        //        ApiAuthenticationToken = "DrIZnsWaqOgyJzMrNQnQkA",
-        //        CiDataUpdateCronExpression = "*/50 * * * *",
-        //        PipelinesNumber = 10,
-        //        Pipelines = new List<Pipeline>()
-        //        {
-        //            new Pipeline()
-        //            {
-        //                DataProviderPipelineId = 378215175, // fakeid
-        //                Ref = "master",
-        //                Sha = "927a9b13f083b7610d7ab31fa4204c1991668ddb",
-        //                CommitTitle = "First Commit Title",
-        //                CommiterName = "First Name",
-        //                CreatedAt = DateTime.UtcNow,
-        //                StartedAt = DateTime.UtcNow,
-        //                UpdatedAt = DateTime.UtcNow,
-        //                FinishedAt = null,
-        //                Status = Status.Running,
-        //                Stages = new List<Stage>()
-        //                {
-        //                    new Stage()
-        //                    {
-        //                        StageName = "Basic test",
-        //                        StageStatus = Status.Created
-        //                    },
-        //                    new Stage()
-        //                    {
-        //                        StageName = "Additional tests",
-        //                        StageStatus = Status.Success
-        //                    },
-        //                    new Stage()
-        //                    {
-        //                        StageName = "Deploy",
-        //                        StageStatus = Status.Success
-        //                    }
-        //                }
-        //            },
-        //            new Pipeline()
-        //            {
-        //                DataProviderPipelineId = 378215175, // fakeid
-        //                Ref = "beta",
-        //                Sha = "f5126d3fad92215d15d9a1d5151ded2cd81a594e",
-        //                CommitTitle = "Second Commit Title",
-        //                CommiterName = "Second Name",
-        //                CreatedAt = DateTime.UtcNow,
-        //                StartedAt = DateTime.UtcNow,
-        //                UpdatedAt = DateTime.UtcNow,
-        //                FinishedAt = null,
-        //                Status = Status.Running,
-        //                Stages = new List<Stage>()
-        //                {
-        //                    new Stage()
-        //                    {
-        //                        StageName = "26719.1",
-        //                        StageStatus = Status.Created
-        //                    },
-        //                    new Stage()
-        //                    {
-        //                        StageName = "26719.2",
-        //                        StageStatus = Status.Success
-        //                    },
-        //                    new Stage()
-        //                    {
-        //                        StageName = "26719.3",
-        //                        StageStatus = Status.Success
-        //                    },
-        //                    new Stage()
-        //                    {
-        //                        StageName = "26719.4",
-        //                        StageStatus = Status.Failed
-        //                    },
-        //                }
-        //            },
-        //            new Pipeline()
-        //            {
-        //                DataProviderPipelineId = 378215175, // fakeid
-        //                Ref = "fancybranchname",
-        //                Sha = "f5126d3fad92215d15d9a1d5151ded2cd81a594e",
-        //                CommitTitle = "Third Commit Title",
-        //                CommiterName = "Third Name",
-        //                CreatedAt = DateTime.UtcNow,
-        //                StartedAt = DateTime.UtcNow,
-        //                UpdatedAt = DateTime.UtcNow,
-        //                FinishedAt = null,
-        //                Status = Status.Running,
-        //                Stages = new List<Stage>()
-        //                {
-        //                    new Stage()
-        //                    {
-        //                        StageName = "26719.1",
-        //                        StageStatus = Status.Created
-        //                    },
-        //                    new Stage()
-        //                    {
-        //                        StageName = "26719.2",
-        //                        StageStatus = Status.Success
-        //                    },
-        //                    new Stage()
-        //                    {
-        //                        StageName = "26719.3",
-        //                        StageStatus = Status.Success
-        //                    },
-        //                    new Stage()
-        //                    {
-        //                        StageName = "26719.4",
-        //                        StageStatus = Status.Failed
-        //                    },
-        //                }
-        //            }
-        //        }
-        //    }
-        //});
     }
 }

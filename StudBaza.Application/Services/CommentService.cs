@@ -11,10 +11,17 @@ namespace StudBaza.Application.Services
     public class CommentService : ICommentService
     {
         private readonly ICommentRepository _commentRepository;
+        private readonly IUserRepository _userRepository;
 
-        public CommentService(ICommentRepository commentRepository)
+        public CommentService(ICommentRepository commentRepository, IUserRepository userRepository)
         {
             _commentRepository = commentRepository;
+            _userRepository = userRepository;
+        }
+
+        public async Task<int> GetAuthorId(string username)
+        {
+            return (await _userRepository.FindOneByAsync(p => p.Username.Equals(username))).Id;
         }
 
         public async Task<Comment> CreateCommentAsync(Comment model)

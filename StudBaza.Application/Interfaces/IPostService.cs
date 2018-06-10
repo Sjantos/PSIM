@@ -9,8 +9,10 @@ namespace StudBaza.Application.Interfaces
 {
     public interface IPostService
     {
-        Task<IEnumerable<Post>> GetAllPostsAsync();
-        Task<Post> GetPostById(int id);
+        Task<(string, string, string)> GetFile(int postId);
+        Task<int> GetAuthorId(string authorUsername);
+        Task<IEnumerable<ResponsePost>> GetAllPostsAsync();
+        Task<ResponsePost> GetPostById(int id);
         Task DeletePostAsync(int id);
         Task<Post> UpdatePostAsync(Post updatedPanel);
         Task<Post> CreatePostAsync(Post model);

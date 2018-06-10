@@ -3,6 +3,7 @@ using StudBaza.Core.Entities;
 using StudBaza.Core.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,10 +12,25 @@ namespace StudBaza.Application.Services
     public class PostService : IPostService
     {
         private readonly IPostRepository _postRepository;
+        private readonly IUserRepository _userRepository;
 
-        public PostService(IPostRepository postRepository)
+        public PostService(IPostRepository postRepository, IUserRepository userRepository)
         {
             _postRepository = postRepository;
+            _userRepository = userRepository;
+        }
+
+        public async Task<(string, string, string)> GetFile(int postId)
+        {
+            var postWithFile = (await _postRepository.FindOneByAsync(p => p.Id == postId));
+            if (postWithFile == null)
+                return (null, null, null);
+            return (postWithFile.FileName, postWithFile.FileType, postWithFile.File);
+        }
+
+        public async Task<int> GetAuthorId(string authorUsername)
+        {
+            return (await _userRepository.FindOneByAsync(p => p.Username.Equals(authorUsername))).Id;
         }
 
         public async Task<Post> CreatePostAsync(Post model)
@@ -34,14 +50,25 @@ namespace StudBaza.Application.Services
             await _postRepository.SaveAsync();
         }
 
-        public Task<IEnumerable<Post>> GetAllPostsAsync()
+        public async Task<IEnumerable<ResponsePost>> GetAllPostsAsync()
         {
-            return _postRepository.GetAllAsync();
+            var posts = await _postRepository.GetAllAsync();
+            List<ResponsePost> res = new List<ResponsePost>();
+            foreach (var item in posts)
+            {
+                var authorUsername = (await _userRepository.FindOneByAsync(u => u.Id == item.AuthorId)).Username;
+                var responsePost = item.ConvertToResponseModel(authorUsername);
+                res.Add(responsePost);
+            }
+
+            var result = posts.Select(async p => p.ConvertToResponseModel((await _userRepository.FindOneByAsync(u => u.Id == p.AuthorId)).Username));
+            return Task.WhenAll(result).Result;
         }
 
-        public Task<Post> GetPostById(int id)
+        public async Task<ResponsePost> GetPostById(int id)
         {
-            return _postRepository.FindOneByAsync(p => p.Id == id);
+            var post = await _postRepository.FindOneByAsync(p => p.Id == id);
+            return post.ConvertToResponseModel((await _userRepository.FindOneByAsync(p => p.Id == post.AuthorId)).Username);
         }
 
         public async Task<Post> UpdatePostAsync(Post updatedPanel)

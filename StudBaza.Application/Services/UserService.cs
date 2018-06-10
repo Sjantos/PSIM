@@ -17,6 +17,15 @@ namespace StudBaza.Application.Services
             _userRepository = userRepository;
         }
 
+        public async Task<bool> UniqueUsername(string username)
+        {
+            var user = await _userRepository.FindOneByAsync(p => p.Username.Equals(username));
+            if (user == null)
+                return true;
+
+            return false;
+        }
+
         public async Task<User> CreateUserAsync(User model)
         {
             if (null != _userRepository.FindOneByAsync(p => p.Email.Equals(model.Email)))

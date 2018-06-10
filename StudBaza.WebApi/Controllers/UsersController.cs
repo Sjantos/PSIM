@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StudBaza.Application.Interfaces;
+using StudBaza.Core.Interfaces.Repositories;
 using StudBaza.WebApi.ApiModels.Requests;
 using StudBaza.WebApi.Infrastructure;
 using Swashbuckle.AspNetCore.Examples;
@@ -37,6 +38,12 @@ namespace StudBaza.WebApi.Controllers
         public async Task<IActionResult> Post([FromBody] CreateUser model)
         {
             var entity = model.MapEntity(model);
+
+            var canCreate = await _userService.UniqueUsername(model.Username);
+            if(!canCreate)
+            {
+                return new JsonResult("Username already exists!");
+            }
 
             var createdResult = await _userService.CreateUserAsync(entity);
             return new JsonResult(createdResult);

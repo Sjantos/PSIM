@@ -8,6 +8,7 @@ namespace StudBaza.Application.Interfaces
 {
     public interface IUserService
     {
+        Task<bool> UniqueUsername(string username);
         Task<User> GetUserById(int id);
         Task DeleteUserAsync(int id);
         Task<User> UpdateUserAsync(User updatedUser);

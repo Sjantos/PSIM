@@ -12,17 +12,17 @@ namespace StudBaza.WebApi.ApiModels.Requests
         [Required]
         public int PostId { get; set; }
         [Required]
-        public int AuthorId { get; set; }
+        public string AuthorUsername { get; set; }
         [Required]
         public string CommentContent { get; set; }
         [Required]
         public DateTime CreatedAt { get; set; }
 
-        public Comment MapEntity(UpdateComment model)
+        public Comment MapEntity(UpdateComment model, int authorId)
         {
             var entity = new Comment()
             {
-                AuthorId = model.AuthorId,
+                AuthorId = authorId,
                 CommentContent = model.CommentContent,
                 CreatedAt = model.CreatedAt
             };
