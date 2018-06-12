@@ -13,6 +13,6 @@ namespace StudBaza.Application.Interfaces
         Task DeleteUserAsync(int id);
         Task<User> UpdateUserAsync(User updatedUser);
         Task<User> CreateUserAsync(User model);
-        Task<bool> CanLogin(string email, string passwordSHA);
+        Task<int?> CanLogin(string email, string passwordSHA);
     }
 }

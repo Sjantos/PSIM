@@ -22,7 +22,7 @@ namespace StudBaza.Data.Repositories
             if (result != null)
                 return result;
             else
-                return await Context.Set<User>().FirstAsync();
+                return null;
         }
     }
 }

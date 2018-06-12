@@ -15,7 +15,6 @@ namespace StudBaza.WebApi.ApiModels.Requests
         public string AuthorUsername { get; set; }
         [Required]
         public string CommentContent { get; set; }
-        [Required]
         public DateTime CreatedAt { get; set; }
 
         public Comment MapEntity(UpdateComment model, int authorId)

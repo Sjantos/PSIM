@@ -23,7 +23,7 @@ namespace StudBaza.WebApi.Controllers
 
         //GET api/Comment
         [HttpGet]
-        public async Task<IEnumerable<Comment>> Get()
+        public async Task<IEnumerable<ResponseComment>> Get()
         {
             var allPosts = await _commentService.GetAllComments();
             return allPosts;

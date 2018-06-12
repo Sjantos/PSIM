@@ -20,9 +20,11 @@ namespace StudBaza.Application
 
             builder.RegisterType<PostService>().As<IPostService>();
             builder.RegisterType<UserService>().As<IUserService>();
+            builder.RegisterType<CommentService>().As<ICommentService>();
 
             builder.RegisterType<PostRepository>().As<IPostRepository>();
             builder.RegisterType<UserRepository>().As<IUserRepository>();
+            builder.RegisterType<CommentRepository>().As<ICommentRepository>();
             //builder.RegisterType<TravisDataProvider>().As<ICiDataProvider>();
             //builder.RegisterType<CiDataProviderFactory>().As<ICiDataProviderFactory>();
         }

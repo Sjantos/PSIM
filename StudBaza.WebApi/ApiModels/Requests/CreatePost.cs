@@ -27,6 +27,14 @@ namespace StudBaza.WebApi.ApiModels.Requests
 
         public Post MapEntity(CreatePost model, int authorId)
         {
+            var contentType = GetContentType(model.FileName);
+            if(contentType == null)
+            {
+                if (string.IsNullOrEmpty(model.FileType) || string.IsNullOrEmpty(model.FileName))
+                    contentType = null;
+                else
+                    contentType = model.FileType;
+            }
             var entity = new Post()
             {
                 AuthorId = authorId,
@@ -37,7 +45,7 @@ namespace StudBaza.WebApi.ApiModels.Requests
                 Title = model.Title,
                 File = model.File,
                 FileName = model.FileName,
-                FileType = GetContentType(model.FileName)
+                FileType = contentType
             };
 
             return entity;
@@ -49,7 +57,11 @@ namespace StudBaza.WebApi.ApiModels.Requests
                 return null;
             var types = GetMimeTypes();
             var ext = Path.GetExtension(path).ToLowerInvariant();
-            return types[ext];
+            string result;
+            if (types.TryGetValue(ext, out result))
+                return result;
+            else
+                return null;
         }
 
         private Dictionary<string, string> GetMimeTypes()
@@ -79,7 +91,7 @@ namespace StudBaza.WebApi.ApiModels.Requests
             {
                 Title = "Post title example",
                 Description = "Post description example",
-                CreatedAt = DateTime.Now,
+                CreatedAt = DateTime.UtcNow,
                 AuthorUsername = "User45674", //fake userName
                 //Tags = new List<string>()
                 //{
@@ -99,7 +111,7 @@ namespace StudBaza.WebApi.ApiModels.Requests
                     {
                         AuthorId = 11,
                         CommentContent = "Comment body example",
-                        CreatedAt = DateTime.Now,
+                        CreatedAt = DateTime.UtcNow,
                     }
                 },
                 File = "File bytes in Base64 as string",

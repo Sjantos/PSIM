@@ -22,7 +22,7 @@ namespace StudBaza.Core.Entities
         public string FileName { get; set; }
         public string FileType { get; set; }
 
-        public ResponsePost ConvertToResponseModel(string authorUsername)
+        public ResponsePost ConvertToResponseModel(string authorUsername, ICollection<ResponseComment> comments)
         {
             return new ResponsePost()
             {
@@ -32,7 +32,7 @@ namespace StudBaza.Core.Entities
                 CreatedAt = this.CreatedAt,
                 AuthorUsername = authorUsername,
                 Tags = this.Tags,
-                Comments = this.Comments,
+                Comments = comments,
                 FileName = this.FileName,
                 FileType = this.FileType
             };

@@ -37,7 +37,7 @@ namespace StudBaza.Data.Context
             {
                 Title = "Post title example",
                 Description = "Post description example",
-                CreatedAt = DateTime.Now,
+                CreatedAt = DateTime.UtcNow,
                 AuthorId = 1, //fake userID
                 Tags = new List<Tag>()
                 {
@@ -51,7 +51,7 @@ namespace StudBaza.Data.Context
                     {
                         AuthorId = 1,
                         CommentContent = "Comment body example",
-                        CreatedAt = DateTime.Now,
+                        CreatedAt = DateTime.UtcNow,
                     }
                 }
             }

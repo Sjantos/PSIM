@@ -3,6 +3,7 @@ using StudBaza.Core.Entities;
 using StudBaza.Core.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -41,19 +42,26 @@ namespace StudBaza.Application.Services
             await _commentRepository.SaveAsync();
         }
 
-        public Task<IEnumerable<Comment>> GetAllComments()
+        public async Task<IEnumerable<ResponseComment>> GetAllComments()
         {
-            return _commentRepository.GetAllAsync();
+            var comments = await _commentRepository.GetAllAsync();
+
+            var result = comments.Select(async p => p.GetResponseComment((await _userRepository.FindOneByAsync(u => u.Id == p.AuthorId)).Username));
+            return Task.WhenAll(result).Result;
         }
 
-        public Task<Comment> GetCommentById(int id)
+        public async Task<ResponseComment> GetCommentById(int id)
         {
-            return _commentRepository.FindOneByAsync(p => p.Id == id);
+            var comment = await _commentRepository.FindOneByAsync(p => p.Id == id);
+            var result = comment.GetResponseComment((await _userRepository.FindOneByAsync(p => p.Id == comment.AuthorId)).Username);
+            return result;
         }
 
-        public Task<IEnumerable<Comment>> GetCommentsForPost(int postId)
+        public async Task<IEnumerable<ResponseComment>> GetCommentsForPost(int postId)
         {
-            return _commentRepository.FindByAsync(p => p.PostId == postId);
+            var comments = await _commentRepository.FindByAsync(p => p.PostId == postId);
+            var result = comments.Select(async p => p.GetResponseComment((await _userRepository.FindOneByAsync(u => u.Id == p.AuthorId)).Username));
+            return Task.WhenAll(result).Result;
         }
 
         public async Task<Comment> UpdateCommentAsync(Comment updatedComment)

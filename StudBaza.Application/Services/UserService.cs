@@ -59,14 +59,14 @@ namespace StudBaza.Application.Services
             return r;
         }
 
-        public async Task<bool> CanLogin(string email, string passwordSHA)
+        public async Task<int?> CanLogin(string email, string passwordSHA)
         {
             var user = await _userRepository.FindOneByAsync(p => p.Email.Equals(email));
             if (user == null)
-                return false;
+                return null;
             if (user.Password.Equals(passwordSHA))
-                return true;
-            return false;
+                return user.Id;
+            return null;
         }
     }
 }

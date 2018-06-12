@@ -23,10 +23,16 @@ namespace StudBaza.WebApi.Controllers
         public async Task<IActionResult> Post([FromBody]Credentials body)
         {
             var logged = await _userService.CanLogin(body.Login, body.Password);
-            if (!logged)
-                return new JsonResult("Bad credentials");
+            if (logged == null)
+            {
+                JsonResult json = new JsonResult(null);
+                json.StatusCode = 299;
+                return json;
+            }
 
-            return Ok();
+            var user = await _userService.GetUserById(logged.Value);
+
+            return new JsonResult(user);
         }
     }
 }
